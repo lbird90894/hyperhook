@@ -37,8 +37,8 @@ This library includes the following:
 
 # 3. Configuration
 * Hypervisor library (hyperhook.lib)
-* Test driver for linking the hypervisor library(test.sys)
-* Driver signature files to bypass KMCI(used only in Test B)
+* Test driver for linking the hypervisor library (test.sys)
+* Driver signature files to bypass KMCI (used only in Test B)
 
 
 # 4. Test
@@ -48,8 +48,8 @@ If you want to verify kernel hooking through the hypervisor and bypass KPP, perf
 
 ## 4.1. Test Environment
 The environment that I tested on is as follows:
-* vmware 15.5.7("Settings -> Hardware -> Processors -> Virtualize Intel VT-x/EPT or AMD-V/RVI" check)
-* Guest OS: Windows 10 22h2(19041)
+* vmware 15.5.7 ("Settings -> Hardware -> Processors -> Virtualize Intel VT-x/EPT or AMD-V/RVI" check)
+* Guest OS: Windows 10 22h2 (19041)
 
 If you want to test on another version of Windows, check that the prologue of the NtCreateFile function to be hooked is as follows.  
 **sub rsp,88h**  
@@ -85,17 +85,17 @@ However, I explain below how to change KMCI's policy to load self-signed drivers
 
 Host OS
 1. "Settings -> Options -> Advanced -> UEFI -> Enable secure boot" check
-2. Move to the folder where the vmx file of the guest OS exists.
+2. Move to the folder where the .vmx file of the guest OS exists.
 3. Copy PK_Cert.cer to that folder.
 4. Delete the .nvram file.
-5. Add the following content to the .vmx file.
-uefi.allowAuthBypass = "TRUE"
+5. Add the following content to the .vmx file.  
+uefi.allowAuthBypass = "TRUE"  
 uefi.secureBoot.PKDefault.file0 = "PK_Cert.cer"
 6. Boot the guest OS.
 
 Guest OS
 1. Place the test folder in an appropriate location.
-2. Run SetBootPolicy.bat.(Several reboots may occur.)
+2. Run SetBootPolicy.bat. (Several reboots may occur.)
 3. Sign the test.sys driver through SignDriver.bat.
 4. After executing the log.reg file, run test.sys through StartDriver.bat.
    (You can check the log through C:\HKlog.txt, windbg + VirtualKD, dbgview64, etc.)
@@ -120,14 +120,14 @@ Please contact me if you have any questions or find bugs.
 
 # 5. Reference
 Hypervisor Related  
-https://github.com/ionescu007/SimpleVisor
-https://github.com/SinaKarvandi/Hypervisor-From-Scratch
+https://github.com/ionescu007/SimpleVisor  
+https://github.com/SinaKarvandi/Hypervisor-From-Scratch  
 https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 
 Driver Signature Related  
-https://github.com/HyperSine/Windows10-CustomKernelSigners
-https://github.com/valinet/ssde
-https://www.geoffchappell.com/notes/windows/license/customkernelsigners.htm
+https://github.com/HyperSine/Windows10-CustomKernelSigners  
+https://github.com/valinet/ssde  
+https://www.geoffchappell.com/notes/windows/license/customkernelsigners.htm  
 https://www.geoffchappell.com/studies/windows/km/ntoskrnl/api/ex/slmem/productpolicy.htm
  
 
